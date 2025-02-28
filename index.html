@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنظمة السادسة</title>
+    <style>
+        /* التصميم العام */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+
+        .button {
+            padding: 15px 30px;
+            background: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .button:hover {
+            background: #ff3b2f;
+            transform: scale(1.05);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .gold {
+            background: linear-gradient(135deg, #ffd700, #ffbf00);
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .gold:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .member {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .member:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        input {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: none;
+            width: 80%;
+            font-size: 1rem;
+        }
+
+        /* تأثيرات إضافية */
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px #ff6f61; }
+            50% { box-shadow: 0 0 20px #ff3b2f; }
+            100% { box-shadow: 0 0 10px #ff6f61; }
+        }
+
+        .glow-effect {
+            animation: glow 2s infinite;
+        }
+
+        .neon-text {
+            color: #fff;
+            text-shadow: 0 0 5px #ff6f61, 0 0 10px #ff6f61, 0 0 20px #ff6f61, 0 0 40px #ff3b2f;
+        }
+
+        /* تأثيرات الخلفية المتحركة */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 10.01%);
+            background-size: 20px 20px;
+            animation: moveBackground 5s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes moveBackground {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(20px, 20px); }
+        }
+
+        /* تأثيرات الظلال الديناميكية */
+        .dynamic-shadow {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .dynamic-shadow:hover {
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
+        }
+
+        /* وضع الليل والنهار */
+        .dark-mode {
+            background: linear-gradient(135deg, #0f0c29, #302b63);
+            color: #fff;
+        }
+
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .dark-mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* زر الرجوع */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            z-index: 1001;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- زر وضع الليل والنهار -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
+
+    <!-- زر الرجوع -->
+    <button class="back-button" onclick="goBack()">←</button>
+
+    <!-- الواجهة الأولى -->
+    <div id="welcome">
+        <h1 class="neon-text">مرحبًا بكم في موقع المنظمة السادسة</h1>
+        <p>يمكنكم في هذا الموقع معرفة معلومات زملائكم</p>
+        <button class="button glow-effect" onclick="showDiscover()">اكتشف</button>
+    </div>
+
+    <!-- الواجهة الثانية -->
+    <div id="discover" class="modal">
+        <p>أوافق وأتحمل المسؤولية</p>
+        <button class="button" onclick="showThirdInterface()">موافق</button>
+    </div>
+
+    <!-- الواجهة الثالثة -->
+    <div id="thirdInterface" class="modal">
+        <div class="gold dynamic-shadow" onclick="showPasswordPrompt()">مبروك فارس</div>
+        <div class="member dynamic-shadow" onclick="showInfo('555')">فارس تاوريت</div>
+        <div class="member dynamic-shadow" onclick="showInfo('555')">كريم شادلي</div>
+        <div class="member dynamic-shadow" onclick="showInfo('555')">كريم غريس</div>
+    </div>
+
+    <!-- نافذة إدخال كلمة المرور -->
+    <div id="passwordPrompt" class="modal">
+        <p>معلومات هذا الشخص خطيرة جدًا، أعضاء المنظمة السادسة هم فقط من يستطيعون قراءة المعلومات.</p>
+        <input type="password" id="passwordInput" placeholder="كلمة المرور">
+        <button class="button" onclick="checkPassword()">إدخال</button>
+    </div>
+
+    <!-- نافذة المعلومات -->
+    <div id="infoModal" class="modal">
+        <p id="infoText"></p>
+        <button class="button" onclick="closeInfoModal()">إغلاق</button>
+    </div>
+
+    <script>
+        // وظائف JavaScript
+        function showDiscover() {
+            document.getElementById('welcome').style.display = 'none';
+            document.getElementById('discover').style.display = 'block';
+        }
+
+        function showThirdInterface() {
+            document.getElementById('discover').style.display = 'none';
+            document.getElementById('thirdInterface').style.display = 'block';
+        }
+
+        function showPasswordPrompt() {
+            document.getElementById('thirdInterface').style.display = 'none';
+            document.getElementById('passwordPrompt').style.display = 'block';
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === "ghedir38") {
+                document.getElementById('passwordPrompt').style.display = 'none';
+                document.getElementById('infoText').innerText = "777";
+                document.getElementById('infoModal').style.display = 'block';
+            } else {
+                alert("كلمة المرور غير صحيحة");
+            }
+        }
+
+        function showInfo(info) {
+            document.getElementById('infoText').innerText = info;
+            document.getElementById('infoModal').style.display = 'block';
+        }
+
+        function closeInfoModal() {
+            document.getElementById('infoModal').style.display = 'none';
+            document.getElementById('thirdInterface').style.display = 'block';
+        }
+
+        // وضع الليل والنهار
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // زر الرجوع
+        function goBack() {
+            const welcome = document.getElementById('welcome');
+            const discover = document.getElementById('discover');
+            const thirdInterface = document.getElementById('thirdInterface');
+            const passwordPrompt = document.getElementById('passwordPrompt');
+            const infoModal = document.getElementById('infoModal');
+
+            if (discover.style.display === 'block') {
+                discover.style.display = 'none';
+                welcome.style.display = 'block';
+            } else if (thirdInterface.style.display === 'block') {
+                thirdInterface.style.display = 'none';
+                discover.style.display = 'block';
+            } else if (passwordPrompt.style.display === 'block') {
+                passwordPrompt.style.display = 'none';
+                thirdInterface.style.display = 'block';
+            } else if (infoModal.style.display === 'block') {
+                infoModal.style.display = 'none';
+                thirdInterface.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
