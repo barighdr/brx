@@ -7,17 +7,16 @@
     <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --space-blue: #0f172a;
-            --starry-night: #1e293b;
-            --golden-sun: #f59e0b;
-            --neon-cyan: #06b6d4;
-            --meat-gradient: linear-gradient(45deg, #8b4513, #a0522d, #8b4513);
-            --geometric-pattern: repeating-linear-gradient(
-                45deg,
+            --space-deep: #0a1625;
+            --starry-night: #1a2738;
+            --golden-glow: #ffd700;
+            --neon-cyan: #00e1ff;
+            --meat-gradient: linear-gradient(45deg, #6b2d07, #8b4513);
+            --geometric-pattern: repeating-linear-gradient(45deg,
                 transparent,
                 transparent 25px,
-                rgba(245,158,11,0.1) 25px,
-                rgba(245,158,11,0.1) 50px
+                rgba(255,215,0,0.05) 25px,
+                rgba(255,215,0,0.05) 50px
             );
         }
 
@@ -29,7 +28,7 @@
         }
 
         body {
-            background: var(--space-blue);
+            background: var(--space-deep);
             color: #fff;
             min-height: 100vh;
             position: relative;
@@ -41,156 +40,148 @@
             position: fixed;
             inset: 0;
             background: var(--geometric-pattern);
-            opacity: 0.1;
+            opacity: 0.15;
             z-index: -1;
         }
 
-        /* === تصميم الواجهة الأولى === */
-        .gateway {
+        /* === الواجهة الأولى - البوابة الكونية === */
+        .stellar-portal {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             padding: 2rem;
-            background: radial-gradient(
-                circle at 80% 20%,
-                rgba(245,158,11,0.1) 0%,
-                transparent 40%
-            );
+            background: radial-gradient(circle at 80% 20%,
+                rgba(255,215,0,0.1) 0%,
+                transparent 40%);
+            opacity: 1;
+            transition: opacity 0.8s ease;
         }
 
-        .gateway-title {
-            font-size: 3.5rem;
-            background: linear-gradient(45deg, var(--golden-sun), var(--neon-cyan));
+        .portal-title {
+            font-size: 4.5rem;
+            background: linear-gradient(135deg, var(--golden-glow), var(--neon-cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(0,225,255,0.3);
             margin: 2rem 0;
-            text-align: center;
             position: relative;
+            animation: titleFloat 3s ease-in-out infinite;
         }
 
-        .gateway-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+        .portal-subtitle {
+            font-size: 1.4rem;
+            color: rgba(255,255,255,0.85);
+            max-width: 600px;
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(0,225,255,0.2);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
         }
 
-        .access-btn {
-            padding: 1rem 3rem;
-            font-size: 1.1rem;
-            background: rgba(255,255,255,0.05);
-            border: 2px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .access-btn:hover {
-            background: var(--neon-cyan);
-            color: var(--space-blue);
-            box-shadow: 0 0 20px rgba(6,182,212,0.3);
-        }
-
-        /* === تصميم الواجهة الثالثة === */
-        .vault {
+        /* === الواجهة الرئيسية - الأرشيف السري === */
+        .quantum-vault {
             display: none;
-            padding: 3rem 1.5rem;
-            max-width: 1200px;
+            padding: 4rem 2rem;
+            max-width: 1400px;
             margin: 0 auto;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 1s ease;
+        }
+
+        .vault-active {
+            transform: translateY(0);
+            opacity: 1;
         }
 
         .vault-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            perspective: 1000px;
         }
 
-        .vault-card {
-            background: var(--starry-night);
-            border-radius: 15px;
-            padding: 1.5rem;
-            border: 1px solid rgba(6,182,212,0.3);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        /* === بطاقات الأعضاء === */
+        .member-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(0,225,255,0.15);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(15px);
         }
 
-        .vault-card::before {
+        .member-card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent,
-                rgba(6,182,212,0.1),
-                transparent
-            );
-            animation: shine 6s infinite;
+            inset: -2px;
+            background: linear-gradient(45deg,
+                var(--neon-cyan),
+                transparent 50%,
+                var(--golden-glow));
+            opacity: 0.3;
+            z-index: -1;
         }
 
-        .vault-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 25px rgba(6,182,212,0.2);
+        .member-card:hover {
+            transform: translateY(-8px) rotateX(3deg) rotateY(3deg);
+            box-shadow: 0 15px 40px rgba(0,225,255,0.15);
         }
 
-        .vault-card.special {
-            background: linear-gradient(
-                135deg,
-                rgba(245,158,11,0.9),
-                rgba(245,158,11,0.6)
-            );
-            border: 1px solid var(--golden-sun);
+        .member-card.special {
+            background: linear-gradient(135deg,
+                rgba(255,215,0,0.15),
+                rgba(0,225,255,0.1));
+            border: 1px solid var(--golden-glow);
         }
 
-        .security-panel {
-            margin-top: 1.5rem;
+        /* === نظام الحماية === */
+        .security-interface {
+            margin-top: 2rem;
             position: relative;
         }
 
-        .code-input {
+        .cipher-input {
             width: 100%;
-            padding: 0.8rem 1.2rem;
+            padding: 1rem;
             background: rgba(0,0,0,0.3);
             border: 1px solid var(--neon-cyan);
             color: #fff;
-            border-radius: 8px;
+            border-radius: 12px;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
         }
 
-        .code-input:focus {
+        .cipher-input:focus {
             outline: none;
-            box-shadow: 0 0 15px rgba(6,182,212,0.3);
+            box-shadow: 0 0 25px rgba(0,225,255,0.2);
         }
 
-        .verify-btn {
+        .auth-btn {
             width: 100%;
-            padding: 0.7rem;
-            margin-top: 1rem;
-            background: linear-gradient(45deg, var(--neon-cyan), var(--golden-sun));
+            padding: 1rem;
+            margin-top: 1.5rem;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--golden-glow));
             border: none;
-            color: #fff;
+            color: var(--space-deep);
             border-radius: 8px;
-            cursor: pointer;
             font-weight: bold;
-            transition: transform 0.2s ease;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
-        .verify-btn:hover {
-            transform: scale(0.98);
+        .auth-btn:hover {
+            transform: scale(0.97);
         }
 
-        /* === واجهة سياربي لحم لحلو === */
-        .special-modal {
+        /* === الواجهة الخاصة === */
+        .meat-dimension {
             position: fixed;
             top: 0;
             left: 0;
@@ -201,157 +192,149 @@
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            animation: fadeIn 0.5s ease;
+            animation: dimensionShift 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
-        .meat-text {
-            font-size: 8vw;
-            background: linear-gradient(45deg, 
-                #ff6b6b, 
-                #ff8e8e, 
-                #ffaaaa);
+        .meat-manifest {
+            font-size: 6vw;
+            background: linear-gradient(45deg,
+                #ff6b6b,
+                #ff8e53,
+                #ff6b6b);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 50px rgba(255,107,107,0.5);
-            position: relative;
-            padding: 2rem;
-            border: 3px solid #ff6b6b;
-            border-radius: 20px;
-            transform: rotate(-3deg);
-            animation: meatGlow 2s infinite alternate;
+            padding: 2rem 4rem;
+            border: 4px solid #ff6b6b;
+            border-radius: 25px;
+            transform: rotate(-5deg);
+            animation: meatPulse 2s ease-in-out infinite;
         }
 
-        .close-btn {
-            position: absolute;
-            top: 2rem;
-            left: 2rem;
-            background: #ff4444;
-            border: none;
-            padding: 1rem 2rem;
-            color: white;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
+        /* === الرسوم المتحركة === */
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
 
-        .close-btn:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 0 20px #ff4444;
+        @keyframes dimensionShift {
+            from { transform: scale(0) rotate(360deg); opacity: 0; }
+            to { transform: scale(1) rotate(0); opacity: 1; }
         }
 
-        @keyframes shine {
-            100% { transform: rotate(360deg); }
+        @keyframes meatPulse {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.05); }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes meatGlow {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.5); }
+        /* === التجاوب مع الأجهزة === */
+        @media (max-width: 1200px) {
+            .portal-title { font-size: 3.5rem; }
         }
 
         @media (max-width: 768px) {
-            .gateway-title { font-size: 2.5rem; }
+            .portal-title { font-size: 2.5rem; }
             .vault-grid { grid-template-columns: 1fr; }
-            .meat-text { font-size: 12vw; }
+            .meat-manifest { font-size: 10vw; }
         }
     </style>
 </head>
 <body>
     <!-- الواجهة الأولى -->
-    <section class="gateway">
-        <h1 class="gateway-title">المنظمة السادسة</h1>
-        <button class="access-btn" onclick="showVault()">تفعيل النظام</button>
+    <section class="stellar-portal" id="portal">
+        <h1 class="portal-title">البوابة الكونية</h1>
+        <p class="portal-subtitle">مدخل المعلومات الاستراتيجية للمنظمة السادسة</p>
+        <button class="auth-btn" onclick="activateVault()">تفعيل النظام</button>
     </section>
 
     <!-- الواجهة الرئيسية -->
-    <main class="vault" id="vault">
+    <main class="quantum-vault" id="vault">
         <div class="vault-grid">
             <!-- الأعضاء المميزون -->
-            <div class="vault-card special">
-                <h2>مبروك فارس 🔒</h2>
-                <div class="security-panel">
-                    <input type="password" class="code-input" placeholder="الكود السري">
-                    <button class="verify-btn" onclick="checkAccess(this, 'ghedir38')">التحقق</button>
+            <div class="member-card special">
+                <h2>مبروك فارس 🔐</h2>
+                <div class="security-interface">
+                    <input type="password" class="cipher-input" placeholder="شفرة الوصول الكونية">
+                    <button class="auth-btn" onclick="verifyAccess(this, 'ghedir38')">التحقق</button>
                 </div>
             </div>
 
-            <div class="vault-card special">
-                <h2>نزيم بن عربة 🔑</h2>
-                <div class="security-panel">
-                    <input type="password" class="code-input" placeholder="الكود السري">
-                    <button class="verify-btn" onclick="checkAccess(this, 'ghedir38')">التحقق</button>
+            <div class="member-card special">
+                <h2>نزيم بن عربة 🛡️</h2>
+                <div class="security-interface">
+                    <input type="password" class="cipher-input" placeholder="شفرة الوصول الكونية">
+                    <button class="auth-btn" onclick="verifyAccess(this, 'ghedir38')">التحقق</button>
                 </div>
             </div>
 
-            <div class="vault-card special">
+            <div class="member-card special">
                 <h2>Adem Cherifi TD 🥩</h2>
-                <div class="security-panel">
-                    <input type="password" class="code-input" placeholder="الكود السري">
-                    <button class="verify-btn" onclick="checkAccess(this, 'crb')">التحقق</button>
+                <div class="security-interface">
+                    <input type="password" class="cipher-input" placeholder="شفرة الوصول الكونية">
+                    <button class="auth-btn" onclick="verifyAccess(this, 'crb')">التحقق</button>
                 </div>
             </div>
 
             <!-- الأعضاء العاديون -->
-            <div class="vault-card" onclick="showInfo('فارس تاوريت')">
+            <div class="member-card" onclick="showPublicRecord('فارس تاوريت')">
                 <h2>فارس تاوريت 📜</h2>
             </div>
 
-            <div class="vault-card" onclick="showInfo('كريم شادلي')">
+            <div class="member-card" onclick="showPublicRecord('كريم شادلي')">
                 <h2>كريم شادلي 📂</h2>
             </div>
 
-            <div class="vault-card" onclick="showInfo('كريم غريس')">
+            <div class="member-card" onclick="showPublicRecord('كريم غريس')">
                 <h2>كريم غريس 🗃️</h2>
             </div>
         </div>
     </main>
 
     <!-- الواجهة الخاصة -->
-    <div class="special-modal" id="meatModal">
-        <button class="close-btn" onclick="closeMeatModal()">✕ إغلاق</button>
-        <h1 class="meat-text">سياربي لحم لحلو 🍖🔥</h1>
+    <div class="meat-dimension" id="meatRealm">
+        <h1 class="meat-manifest">سياربي لحم لحلو 🍖✨</h1>
     </div>
 
     <script>
-        function showVault() {
-            document.querySelector('.gateway').style.display = 'none';
-            document.getElementById('vault').style.display = 'block';
+        function activateVault() {
+            document.getElementById('portal').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('portal').style.display = 'none';
+                document.getElementById('vault').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('vault').classList.add('vault-active');
+                }, 100);
+            }, 800);
         }
 
-        function checkAccess(btn, correctPassword) {
-            const card = btn.closest('.vault-card');
-            const input = card.querySelector('.code-input');
+        function verifyAccess(btn, correctCode) {
+            const card = btn.closest('.member-card');
+            const input = card.querySelector('.cipher-input');
             
-            if(input.value === correctPassword) {
+            if(input.value === correctCode) {
                 if(card.querySelector('h2').textContent.includes('Adem')) {
-                    showMeatModal();
+                    document.getElementById('meatRealm').style.display = 'flex';
                 } else {
-                    card.style.background = 'linear-gradient(135deg, #059669, #06b6d4)';
-                    card.querySelector('h2').innerHTML += ' ✅';
-                    setTimeout(() => alert('777 - بيانات سرية'), 300);
+                    card.style.background = 'linear-gradient(135deg, rgba(0,230,150,0.2), rgba(0,200,255,0.15))';
+                    card.querySelector('h2').innerHTML += ' <span class="access-granted">✅</span>';
                 }
             } else {
-                input.style.borderColor = '#ef4444';
+                input.style.borderColor = '#ff4444';
                 setTimeout(() => input.style.borderColor = 'var(--neon-cyan)', 500);
+                card.style.animation = 'accessDenied 0.5s';
             }
         }
 
-        function showInfo(name) {
-            alert(`555 - معلومات عامة: ${name}`);
+        function showPublicRecord(name) {
+            alert(`معلومات عامة - ${name}\nالصلاحية: عضو فخري\nالرمز: 555`);
         }
 
-        function showMeatModal() {
-            document.getElementById('meatModal').style.display = 'flex';
-        }
-
-        function closeMeatModal() {
-            document.getElementById('meatModal').style.display = 'none';
-        }
+        // إغلاق الواجهة الخاصة بالنقر خارج المحتوى
+        document.getElementById('meatRealm').addEventListener('click', (e) => {
+            if(e.target === document.getElementById('meatRealm')) {
+                document.getElementById('meatRealm').style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
