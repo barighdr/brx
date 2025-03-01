@@ -6,300 +6,230 @@
     <title>المنظمة السادسة</title>
     <style>
         /* التصميم العام */
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: white;
-            text-align: center;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
+            font-family: 'Segoe UI', sans-serif;
         }
 
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            opacity: 0.8;
-        }
-
-        .button {
-            padding: 15px 30px;
-            background: #ff6f61;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-        .button:hover {
-            background: #ff3b2f;
-            transform: scale(1.05);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.9);
-            padding: 30px;
-            border-radius: 15px;
-            color: white;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-        }
-
-        .gold {
-            background: linear-gradient(135deg, #ffd700, #ffbf00);
-            color: black;
-            padding: 20px;
-            border-radius: 10px;
-            font-size: 1.5rem;
-            margin: 10px;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .gold:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
-        }
-
-        .member {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-        .member:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.05);
-        }
-
-        input {
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: none;
-            width: 80%;
-            font-size: 1rem;
-        }
-
-        /* تأثيرات إضافية */
-        @keyframes glow {
-            0% { box-shadow: 0 0 10px #ff6f61; }
-            50% { box-shadow: 0 0 20px #ff3b2f; }
-            100% { box-shadow: 0 0 10px #ff6f61; }
-        }
-
-        .glow-effect {
-            animation: glow 2s infinite;
-        }
-
-        .neon-text {
+        body {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
             color: #fff;
-            text-shadow: 0 0 5px #ff6f61, 0 0 10px #ff6f61, 0 0 20px #ff6f61, 0 0 40px #ff3b2f;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* تأثيرات الخلفية المتحركة */
-        body::before {
+        /* الواجهة الأولى */
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+            background: radial-gradient(circle, #2a2a2a 0%, #1a1a1a 100%);
+        }
+
+        .title {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 15px #00ff88;
+            animation: neonGlow 1.5s ease-in-out infinite alternate;
+            background: linear-gradient(45deg, #00ff88, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        /* تصميم الأزرار */
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, #00ff88, #00ffff);
+            color: #1a1a1a;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.8);
+        }
+
+        /* الواجهة الثالثة */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .member-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-card::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 10.01%);
-            background-size: 20px 20px;
-            animation: moveBackground 5s linear infinite;
-            z-index: -1;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
         }
 
-        @keyframes moveBackground {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(20px, 20px); }
+        .member-card:hover::before {
+            left: 100%;
         }
 
-        /* تأثيرات الظلال الديناميكية */
-        .dynamic-shadow {
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-            transition: box-shadow 0.3s ease;
+        .gold-card {
+            background: linear-gradient(45deg, #ffd700, #daa520);
+            transform: scale(1.1);
+            z-index: 2;
         }
 
-        .dynamic-shadow:hover {
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
+        /* تأثيرات النيون */
+        @keyframes neonGlow {
+            from {
+                text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88, 0 0 30px #00ff88;
+            }
+            to {
+                text-shadow: 0 0 5px #00ff88, 0 0 15px #00ff88, 0 0 25px #00ff88;
+            }
         }
 
-        /* وضع الليل والنهار */
-        .dark-mode {
-            background: linear-gradient(135deg, #0f0c29, #302b63);
+        /* نمط الوثيقة */
+        .document {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid #00ff88;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+            max-width: 500px;
+            margin: 2rem auto;
+            font-size: 3rem;
+            text-align: center;
+        }
+
+        /* نمط الإدخال */
+        .password-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            padding: 10px;
             color: #fff;
-        }
-
-        .dark-mode-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .dark-mode-toggle:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* زر الرجوع */
-        .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            z-index: 1001;
-        }
-
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.2);
+            margin: 10px 0;
+            width: 200px;
         }
     </style>
 </head>
 <body>
-
-    <!-- زر وضع الليل والنهار -->
-    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
-
-    <!-- زر الرجوع -->
-    <button class="back-button" onclick="goBack()">←</button>
-
     <!-- الواجهة الأولى -->
-    <div id="welcome">
-        <h1 class="neon-text">مرحبًا بكم في موقع المنظمة السادسة</h1>
-        <p>يمكنكم في هذا الموقع معرفة معلومات زملائكم</p>
-        <button class="button glow-effect" onclick="showDiscover()">اكتشف</button>
+    <div class="welcome-screen" id="welcomeScreen">
+        <h1 class="title">مرحبا بكم في المنظمة السادسة</h1>
+        <p class="subtitle">يمكنكم في هذا الموقع معرفة معلومات زملائكم</p>
+        <button class="btn" onclick="showAgreement()">اكتشف</button>
     </div>
 
-    <!-- الواجهة الثانية -->
-    <div id="discover" class="modal">
-        <p>أوافق وأتحمل المسؤولية</p>
-        <button class="button" onclick="showThirdInterface()">موافق</button>
+    <!-- واجهة الموافقة -->
+    <div class="agreement-modal" id="agreementModal" style="display: none;">
+        <div class="modal-content">
+            <h2>أوافق وأتحمل المسؤولية</h2>
+            <button class="btn" onclick="showMembers()">موافق</button>
+        </div>
     </div>
 
     <!-- الواجهة الثالثة -->
-    <div id="thirdInterface" class="modal">
-        <div class="gold dynamic-shadow" onclick="showPasswordPrompt()">مبروك فارس</div>
-        <div class="member dynamic-shadow" onclick="showInfo('555')">فارس تاوريت</div>
-        <div class="member dynamic-shadow" onclick="showInfo('555')">كريم شادلي</div>
-        <div class="member dynamic-shadow" onclick="showInfo('555')">كريم غريس</div>
+    <div class="members-grid" id="membersGrid" style="display: none;">
+        <div class="member-card gold-card" onclick="showPasswordPrompt()">
+            <h2>1. مبروك فارس</h2>
+            <small>معلومات هذا الشخص خطيرة</small>
+        </div>
+        <div class="member-card" onclick="showInfo()">
+            <h2>فارس تاوريت</h2>
+        </div>
+        <div class="member-card" onclick="showInfo()">
+            <h2>كريم شادلي</h2>
+        </div>
+        <div class="member-card" onclick="showInfo()">
+            <h2>كريم غريس</h2>
+        </div>
     </div>
 
-    <!-- نافذة إدخال كلمة المرور -->
-    <div id="passwordPrompt" class="modal">
-        <p>معلومات هذا الشخص خطيرة جدًا، أعضاء المنظمة السادسة هم فقط من يستطيعون قراءة المعلومات.</p>
-        <input type="password" id="passwordInput" placeholder="كلمة المرور">
-        <button class="button" onclick="checkPassword()">إدخال</button>
-    </div>
-
-    <!-- نافذة المعلومات -->
-    <div id="infoModal" class="modal">
-        <p id="infoText"></p>
-        <button class="button" onclick="closeInfoModal()">إغلاق</button>
-    </div>
+    <!-- الوثيقة -->
+    <div id="document" style="display: none;" class="document">777</div>
 
     <script>
-        // وظائف JavaScript
-        function showDiscover() {
-            document.getElementById('welcome').style.display = 'none';
-            document.getElementById('discover').style.display = 'block';
+        // وظائف الانتقال بين الواجهات
+        function showAgreement() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('agreementModal').style.display = 'flex';
         }
 
-        function showThirdInterface() {
-            document.getElementById('discover').style.display = 'none';
-            document.getElementById('thirdInterface').style.display = 'block';
+        function showMembers() {
+            document.getElementById('agreementModal').style.display = 'none';
+            document.getElementById('membersGrid').style.display = 'grid';
         }
 
+        // إدارة كلمة المرور
         function showPasswordPrompt() {
-            document.getElementById('thirdInterface').style.display = 'none';
-            document.getElementById('passwordPrompt').style.display = 'block';
-        }
-
-        function checkPassword() {
-            const password = document.getElementById('passwordInput').value;
-            if (password === "ghedir38") {
-                document.getElementById('passwordPrompt').style.display = 'none';
-                document.getElementById('infoText').innerText = "777";
-                document.getElementById('infoModal').style.display = 'block';
+            const password = prompt('أدخل كلمة المرور:');
+            if (password === 'ghedir38') {
+                showDocument();
             } else {
-                alert("كلمة المرور غير صحيحة");
+                alert('كلمة المرور خاطئة!');
             }
         }
 
-        function showInfo(info) {
-            document.getElementById('infoText').innerText = info;
-            document.getElementById('infoModal').style.display = 'block';
+        function showDocument() {
+            document.getElementById('membersGrid').style.display = 'none';
+            document.getElementById('document').style.display = 'block';
         }
 
-        function closeInfoModal() {
-            document.getElementById('infoModal').style.display = 'none';
-            document.getElementById('thirdInterface').style.display = 'block';
+        function showInfo() {
+            document.getElementById('membersGrid').style.display = 'none';
+            const doc = document.getElementById('document');
+            doc.style.display = 'block';
+            doc.textContent = '555';
         }
 
-        // وضع الليل والنهار
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-        }
-
-        // زر الرجوع
-        function goBack() {
-            const welcome = document.getElementById('welcome');
-            const discover = document.getElementById('discover');
-            const thirdInterface = document.getElementById('thirdInterface');
-            const passwordPrompt = document.getElementById('passwordPrompt');
-            const infoModal = document.getElementById('infoModal');
-
-            if (discover.style.display === 'block') {
-                discover.style.display = 'none';
-                welcome.style.display = 'block';
-            } else if (thirdInterface.style.display === 'block') {
-                thirdInterface.style.display = 'none';
-                discover.style.display = 'block';
-            } else if (passwordPrompt.style.display === 'block') {
-                passwordPrompt.style.display = 'none';
-                thirdInterface.style.display = 'block';
-            } else if (infoModal.style.display === 'block') {
-                infoModal.style.display = 'none';
-                thirdInterface.style.display = 'block';
-            }
-        }
+        // تأثيرات ديناميكية
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.member-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.transform = `perspective(1000px) rotateX(${(y - rect.height/2)/10}deg) rotateY(${-(x - rect.width/2)/10}deg)`;
+                card.style.boxShadow = `${(x - rect.width/2)/5}px ${(y - rect.height/2)/5}px 30px rgba(0,255,136,0.3)`;
+            });
+        });
     </script>
 </body>
 </html>
