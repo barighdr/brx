@@ -11,6 +11,7 @@
             --starry-night: #1e293b;
             --golden-sun: #f59e0b;
             --neon-cyan: #06b6d4;
+            --meat-gradient: linear-gradient(45deg, #8b4513, #a0522d, #8b4513);
             --geometric-pattern: repeating-linear-gradient(
                 45deg,
                 transparent,
@@ -80,14 +81,35 @@
             background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
         }
 
-        /* === تصميم البطاقات === */
+        .access-btn {
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .access-btn:hover {
+            background: var(--neon-cyan);
+            color: var(--space-blue);
+            box-shadow: 0 0 20px rgba(6,182,212,0.3);
+        }
+
+        /* === تصميم الواجهة الثالثة === */
+        .vault {
+            display: none;
+            padding: 3rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
         .vault-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
-            padding: 3rem 1.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
         .vault-card {
@@ -130,11 +152,6 @@
             border: 1px solid var(--golden-sun);
         }
 
-        /* === أنيميشن وإضاءة === */
-        @keyframes shine {
-            100% { transform: rotate(360deg); }
-        }
-
         .security-panel {
             margin-top: 1.5rem;
             position: relative;
@@ -172,9 +189,75 @@
             transform: scale(0.98);
         }
 
+        /* === واجهة سياربي لحم لحلو === */
+        .special-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--meat-gradient);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .meat-text {
+            font-size: 8vw;
+            background: linear-gradient(45deg, 
+                #ff6b6b, 
+                #ff8e8e, 
+                #ffaaaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 50px rgba(255,107,107,0.5);
+            position: relative;
+            padding: 2rem;
+            border: 3px solid #ff6b6b;
+            border-radius: 20px;
+            transform: rotate(-3deg);
+            animation: meatGlow 2s infinite alternate;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background: #ff4444;
+            border: none;
+            padding: 1rem 2rem;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 20px #ff4444;
+        }
+
+        @keyframes shine {
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes meatGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.5); }
+        }
+
         @media (max-width: 768px) {
             .gateway-title { font-size: 2.5rem; }
             .vault-grid { grid-template-columns: 1fr; }
+            .meat-text { font-size: 12vw; }
         }
     </style>
 </head>
@@ -182,18 +265,18 @@
     <!-- الواجهة الأولى -->
     <section class="gateway">
         <h1 class="gateway-title">المنظمة السادسة</h1>
-        <button class="verify-btn" onclick="showVault()">تفعيل النظام</button>
+        <button class="access-btn" onclick="showVault()">تفعيل النظام</button>
     </section>
 
     <!-- الواجهة الرئيسية -->
-    <main class="vault" id="vault" style="display: none;">
+    <main class="vault" id="vault">
         <div class="vault-grid">
             <!-- الأعضاء المميزون -->
             <div class="vault-card special">
                 <h2>مبروك فارس 🔒</h2>
                 <div class="security-panel">
                     <input type="password" class="code-input" placeholder="الكود السري">
-                    <button class="verify-btn" onclick="checkAccess(this)">التحقق</button>
+                    <button class="verify-btn" onclick="checkAccess(this, 'ghedir38')">التحقق</button>
                 </div>
             </div>
 
@@ -201,7 +284,15 @@
                 <h2>نزيم بن عربة 🔑</h2>
                 <div class="security-panel">
                     <input type="password" class="code-input" placeholder="الكود السري">
-                    <button class="verify-btn" onclick="checkAccess(this)">التحقق</button>
+                    <button class="verify-btn" onclick="checkAccess(this, 'ghedir38')">التحقق</button>
+                </div>
+            </div>
+
+            <div class="vault-card special">
+                <h2>Adem Cherifi TD 🥩</h2>
+                <div class="security-panel">
+                    <input type="password" class="code-input" placeholder="الكود السري">
+                    <button class="verify-btn" onclick="checkAccess(this, 'crb')">التحقق</button>
                 </div>
             </div>
 
@@ -220,20 +311,30 @@
         </div>
     </main>
 
+    <!-- الواجهة الخاصة -->
+    <div class="special-modal" id="meatModal">
+        <button class="close-btn" onclick="closeMeatModal()">✕ إغلاق</button>
+        <h1 class="meat-text">سياربي لحم لحلو 🍖🔥</h1>
+    </div>
+
     <script>
         function showVault() {
             document.querySelector('.gateway').style.display = 'none';
             document.getElementById('vault').style.display = 'block';
         }
 
-        function checkAccess(btn) {
+        function checkAccess(btn, correctPassword) {
             const card = btn.closest('.vault-card');
             const input = card.querySelector('.code-input');
             
-            if(input.value === 'ghedir38') {
-                card.style.background = 'linear-gradient(135deg, #059669, #06b6d4)';
-                card.querySelector('h2').innerHTML += ' ✅';
-                setTimeout(() => alert('777 - بيانات سرية'), 300);
+            if(input.value === correctPassword) {
+                if(card.querySelector('h2').textContent.includes('Adem')) {
+                    showMeatModal();
+                } else {
+                    card.style.background = 'linear-gradient(135deg, #059669, #06b6d4)';
+                    card.querySelector('h2').innerHTML += ' ✅';
+                    setTimeout(() => alert('777 - بيانات سرية'), 300);
+                }
             } else {
                 input.style.borderColor = '#ef4444';
                 setTimeout(() => input.style.borderColor = 'var(--neon-cyan)', 500);
@@ -242,6 +343,14 @@
 
         function showInfo(name) {
             alert(`555 - معلومات عامة: ${name}`);
+        }
+
+        function showMeatModal() {
+            document.getElementById('meatModal').style.display = 'flex';
+        }
+
+        function closeMeatModal() {
+            document.getElementById('meatModal').style.display = 'none';
         }
     </script>
 </body>
